@@ -133,5 +133,11 @@ class CelestialAnimation {
 
 // Initialize animation when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new CelestialAnimation();
+    console.log('Initializing celestial animation...');
+    try {
+        const animation = new CelestialAnimation();
+        console.log('Celestial animation initialized successfully');
+    } catch (error) {
+        console.error('Error initializing celestial animation:', error);
+    }
 });
