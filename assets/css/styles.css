@@ -1320,6 +1320,7 @@ footer p {
     }
 }
 
+/* Enhanced tech-list styling for better visibility */
 .tech-list {
     list-style: none;
     padding: 0;
@@ -1332,6 +1333,7 @@ footer p {
     position: relative;
     font-weight: 500; /* Increased for better readability */
     transition: color 0.3s ease;
+    color: var(--text-primary);
 }
 
 .tech-list li::before {
@@ -1340,12 +1342,31 @@ footer p {
     left: 0;
     color: var(--accent-primary);
     font-weight: bold;
+    font-size: 1.2em;
+    line-height: 1;
+    top: 0;
 }
 
-/* Ensure tech-list bullets are visible in dark mode */
+/* Enhanced dark mode styling for tech-list bullets */
 [data-theme="dark"] .tech-list li::before {
-    color: var(--accent-primary);
-    text-shadow: 0 0 2px var(--accent-primary);
+    color: #60a5fa !important;
+    text-shadow: 0 0 3px #60a5fa;
+    font-weight: bold;
+}
+
+[data-theme="dark"] .tech-list li {
+    color: var(--text-primary);
+}
+
+/* Light mode specific styling */
+[data-theme="light"] .tech-list li::before {
+    color: #3498db !important;
+    font-weight: bold;
+}
+
+/* Ensure tech-list items have proper contrast */
+.tech-list li {
+    color: var(--text-primary) !important;
 }
 
 .education-list {
