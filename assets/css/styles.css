@@ -547,6 +547,9 @@ footer {
 
 .button-container {
     margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
 }
 
 @keyframes fadeIn {
@@ -554,22 +557,64 @@ footer {
     to { opacity: 1; transform: translateY(0); }
 }
 
-button {
+.button {
+    display: inline-block;
     background-color: transparent;
     color: #2c3e50;
     border: 1px solid #2c3e50;
-    padding: 0.85rem 2rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: "cormorant-garamond", serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.button:hover {
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.15);
+}
+
+.button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #2c3e50;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+}
+
+.button:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+button[type="submit"] {
+    display: inline-block;
+    background-color: transparent;
+    color: #2c3e50;
+    border: 1px solid #2c3e50;
+    padding: 0.85rem 2.5rem;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 1.1rem;
     font-family: "cormorant-garamond", serif;
+    font-size: 1.1rem;
     letter-spacing: 0.04em;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
     text-transform: uppercase;
     font-weight: 500;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
 }
 
 @keyframes button-loading {
@@ -577,7 +622,32 @@ button {
     50%, 100% { transform: translateX(100%); }
 }
 
-button.loading {
+button[type="submit"]:hover {
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.15);
+}
+
+button[type="submit"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #2c3e50;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+}
+
+button[type="submit"]:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+button[type="submit"].loading {
     position: relative;
     overflow: hidden;
     background-color: #2c3e50;
@@ -585,7 +655,7 @@ button.loading {
     pointer-events: none;
 }
 
-button.loading:after {
+button[type="submit"].loading::after {
     content: '';
     position: absolute;
     top: 0;
@@ -601,13 +671,17 @@ button.loading:after {
     animation: button-loading 1.5s infinite;
 }
 
-button:disabled {
+button[type="submit"]:disabled {
     opacity: 0.7;
     cursor: not-allowed;
     background-color: #e9ecef;
     border-color: #e9ecef;
     color: #8898aa;
     transform: none;
+}
+
+button[type="submit"]:disabled::before {
+    display: none;
 }
 
 button:before {
