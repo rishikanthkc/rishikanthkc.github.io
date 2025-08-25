@@ -5,6 +5,8 @@ class CelestialAnimation {
         this.stars = [];
         this.planets = [];
         this.time = 0;
+        this.hoveredPlanet = null;
+        this.mousePos = { x: 0, y: 0 };
         
         // Make canvas fullscreen and responsive
         this.canvas.style.position = 'fixed';
@@ -12,7 +14,7 @@ class CelestialAnimation {
         this.canvas.style.left = '0';
         this.canvas.style.width = '100%';
         this.canvas.style.height = '100%';
-        this.canvas.style.pointerEvents = 'none';
+        this.canvas.style.pointerEvents = 'auto';
         this.canvas.style.zIndex = '-1';
         
         document.body.prepend(this.canvas);
@@ -40,13 +42,14 @@ class CelestialAnimation {
         this.stars = [];
         
         for (let i = 0; i < numStars; i++) {
+            const size = 0.5 + Math.random() * 1.5;
             this.stars.push({
                 x: Math.random() * this.width,
                 y: Math.random() * this.height,
-                size: 0.5 + Math.random() * 1.5,
-                twinkleSpeed: 0.03 + Math.random() * 0.02,
+                size: size,
+                twinkleSpeed: 0.01 + Math.random() * 0.1,
                 twinkleOffset: Math.random() * Math.PI * 2,
-                moveSpeed: 0.4
+                moveSpeed: 3 / size // Inverse proportion to size for parallax
             });
         }
     }
@@ -56,14 +59,26 @@ class CelestialAnimation {
         this.planets = [];
         
         for (let i = 0; i < numPlanets; i++) {
+            const size = 2 + Math.random() * 3;
             this.planets.push({
                 x: Math.random() * this.width,
                 y: Math.random() * this.height,
-                size: 2 + Math.random() * 3,
-                moveSpeed: 0.2,
-                glowSize: 3
+                size: size,
+                moveSpeed: 3 / size, // Inverse proportion to size for parallax
+                glowSize: 3,
+                scale: 1,
+                targetScale: 1
             });
         }
+        
+        // Add mouse move listener for planet hover
+        this.canvas.addEventListener('mousemove', (e) => {
+            const rect = this.canvas.getBoundingClientRect();
+            this.mousePos = {
+                x: (e.clientX - rect.left) * (this.canvas.width / rect.width),
+                y: (e.clientY - rect.top) * (this.canvas.height / rect.height)
+            };
+        });
     }
     
     drawStar(star) {
@@ -75,23 +90,36 @@ class CelestialAnimation {
     }
     
     drawPlanet(planet) {
+        // Check if planet is being hovered
+        const dx = this.mousePos.x - planet.x;
+        const dy = this.mousePos.y - planet.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const isHovered = distance < planet.size * planet.scale;
+        
+        // Update scale with smooth transition
+        planet.targetScale = isHovered ? 1.2 : 1;
+        planet.scale += (planet.targetScale - planet.scale) * 0.1;
+        
+        const scaledSize = planet.size * planet.scale;
+        const scaledGlowSize = planet.glowSize * planet.scale;
+        
         // Draw glow
         const gradient = this.ctx.createRadialGradient(
             planet.x, planet.y, 0,
-            planet.x, planet.y, planet.size + planet.glowSize
+            planet.x, planet.y, scaledSize + scaledGlowSize
         );
-        gradient.addColorStop(0, 'rgba(0, 0, 0, 0.4)');
-        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        gradient.addColorStop(0, isHovered ? 'rgba(0, 0, 0, 0.5)' : 'rgba(30, 30, 30, 0.4)');
+        gradient.addColorStop(1, 'rgba(30, 30, 30, 0)');
         
         this.ctx.beginPath();
         this.ctx.fillStyle = gradient;
-        this.ctx.arc(planet.x, planet.y, planet.size + planet.glowSize, 0, Math.PI * 2);
+        this.ctx.arc(planet.x, planet.y, scaledSize + scaledGlowSize, 0, Math.PI * 2);
         this.ctx.fill();
         
         // Draw planet
         this.ctx.beginPath();
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-        this.ctx.arc(planet.x, planet.y, planet.size, 0, Math.PI * 2);
+        this.ctx.fillStyle = isHovered ? 'rgba(0, 0, 0, 0.9)' : 'rgba(30, 30, 30, 0.8)';
+        this.ctx.arc(planet.x, planet.y, scaledSize, 0, Math.PI * 2);
         this.ctx.fill();
     }
     
@@ -115,8 +143,23 @@ class CelestialAnimation {
         });
     }
     
+    drawRadialGradient() {
+        const gradient = this.ctx.createRadialGradient(
+            this.width / 2, this.height / 2, 0,
+            this.width / 2, this.height / 2, Math.max(this.width, this.height)
+        );
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        gradient.addColorStop(1, 'rgba(240, 240, 240, 0.8)');
+        
+        this.ctx.fillStyle = gradient;
+        this.ctx.fillRect(0, 0, this.width, this.height);
+    }
+    
     animate() {
         this.ctx.clearRect(0, 0, this.width, this.height);
+        
+        // Draw background gradient
+        this.drawRadialGradient();
         
         this.time += 0.016; // Approximately 60fps
         this.updatePositions();
