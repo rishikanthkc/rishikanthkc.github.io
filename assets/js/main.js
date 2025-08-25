@@ -18,20 +18,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     method: 'POST',
                     body: new FormData(contactForm),
                     headers: {
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
                     }
                 });
                 
+                const data = await response.json();
                 formStatus.style.display = 'block';
                 
                 if (response.ok) {
-                    // Success message
-                    formStatus.textContent = 'Thank you for your message! I\'ll get back to you soon.';
-                    formStatus.style.color = '#2ecc71';
-                    contactForm.reset();
+                    // Success - redirect to thank you page
+                    window.location.href = contactForm.querySelector('input[name="_next"]').value;
                 } else {
                     // Error message
-                    formStatus.textContent = 'Oops! There was a problem sending your message. Please try again.';
+                    formStatus.textContent = data.error || 'Oops! There was a problem sending your message. Please try again.';
                     formStatus.style.color = '#e74c3c';
                 }
             } catch (error) {
