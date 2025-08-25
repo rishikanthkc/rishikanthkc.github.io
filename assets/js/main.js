@@ -1,4 +1,19 @@
-document.addEventListener('DOMContentLoaded', () => {
+docum    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const formStatus = document.getElementById('form-status');
+            const originalButtonText = submitButton.textContent;
+            
+            try {
+                // Reset and show loading state
+                submitButton.classList.add('loading');
+                submitButton.disabled = true;
+                submitButton.textContent = 'Sending...';
+                formStatus.style.display = 'block';
+                formStatus.textContent = 'Sending message...';
+                formStatus.className = '';stener('DOMContentLoaded', () => {
     // Handle contact form submission
     const contactForm = document.getElementById('contact-form');
     const formStatus = document.getElementById('form-status');
@@ -39,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 formStatus.className = 'error';
             } finally {
                 // Reset button state
+                submitButton.classList.remove('loading');
                 submitButton.textContent = originalButtonText;
                 submitButton.disabled = false;
             }
