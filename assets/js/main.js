@@ -1,4 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Handle contact form submission
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Show loading state
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+            
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                formStatus.style.display = 'block';
+                
+                if (response.ok) {
+                    // Success message
+                    formStatus.textContent = 'Thank you for your message! I\'ll get back to you soon.';
+                    formStatus.style.color = '#2ecc71';
+                    contactForm.reset();
+                } else {
+                    // Error message
+                    formStatus.textContent = 'Oops! There was a problem sending your message. Please try again.';
+                    formStatus.style.color = '#e74c3c';
+                }
+            } catch (error) {
+                // Network error message
+                formStatus.style.display = 'block';
+                formStatus.textContent = 'Oops! There was a problem sending your message. Please try again.';
+                formStatus.style.color = '#e74c3c';
+            }
+            
+            // Reset button state
+            submitButton.textContent = originalButtonText;
+            submitButton.disabled = false;
+        });
+    }
+
     // Initialize sections for fade-in
     const sections = document.querySelectorAll('section');
     sections.forEach(section => {
