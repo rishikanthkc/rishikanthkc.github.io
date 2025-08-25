@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
         section.classList.add('reveal');
         observer.observe(section);
     });
-    observer.observe(section);
 });
 
 // Add reveal animation to skills
