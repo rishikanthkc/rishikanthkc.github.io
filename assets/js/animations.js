@@ -1,28 +1,45 @@
-// Check if the browser supports View Transitions API
+// Enhanced animation handling
+document.documentElement.classList.add('js-enabled');
+
+// Optimized View Transitions API implementation
 if (document.startViewTransition) {
-    // Handle navigation with view transitions
     document.addEventListener('click', (e) => {
-        if (e.target.tagName === 'A' && e.target.href) {
+        const link = e.target.closest('a');
+        if (link && link.href && link.href.startsWith(window.location.origin)) {
             e.preventDefault();
             
+            // Add exit animation class
+            document.documentElement.classList.add('navigating');
+            
             document.startViewTransition(() => {
-                window.location.href = e.target.href;
+                document.documentElement.classList.remove('navigating');
+                window.location.href = link.href;
             });
         }
     });
 }
 
 // Intersection Observer for scroll animations
+// Enhanced Intersection Observer options
 const observerOptions = {
     root: null,
-    rootMargin: '0px',
-    threshold: 0.1
+    rootMargin: '50px',
+    threshold: [0, 0.1, 0.2]
 };
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
+            // Add delay based on index for staggered animation
+            const delay = Array.from(entry.target.parentElement.children).indexOf(entry.target) * 100;
+            entry.target.style.transitionDelay = `${delay}ms`;
             entry.target.classList.add('reveal-visible');
+            
+            // Remove delay after animation
+            setTimeout(() => {
+                entry.target.style.transitionDelay = '0ms';
+            }, delay + 600);
+            
             observer.unobserve(entry.target);
         }
     });
