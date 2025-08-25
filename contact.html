@@ -30,7 +30,7 @@
 
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" id="email" name="_replyto" required>
+                    <input type="email" id="email" name="email" required>
                 </div>
 
                 <div class="form-group">
@@ -38,7 +38,11 @@
                     <textarea id="message" name="message" required></textarea>
                 </div>
 
+                <!-- Redirect after submission -->
+                <input type="hidden" name="_next" value="https://rishikanthkc.github.io/thank-you.html">
+                
                 <!-- Spam prevention -->
+                <input type="hidden" name="_subject" value="New Portfolio Contact Form Submission">
                 <input type="text" name="_gotcha" style="display:none">
                 
                 <button type="submit">Send Message</button>

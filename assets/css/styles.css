@@ -351,6 +351,25 @@ footer {
     animation: fadeIn 0.3s ease;
 }
 
+.thank-you {
+    text-align: center;
+    padding: 3rem;
+}
+
+.thank-you h2 {
+    color: #2ecc71;
+    margin-bottom: 1.5rem;
+}
+
+.thank-you p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.button-container {
+    margin-top: 2rem;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
