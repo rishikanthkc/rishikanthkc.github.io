@@ -433,9 +433,56 @@ h3 {
 
 footer {
     text-align: center;
-    padding: 2rem;
+    padding: 3rem 2rem;
     background-color: #ffffff;
     border-top: 1px solid #eee;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.social-links .button {
+    background-color: transparent;
+    color: #2c3e50;
+    border: 1px solid #2c3e50;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: "cormorant-garamond", serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-links .button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #2c3e50;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+}
+
+.social-links .button:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.15);
+}
+
+.social-links .button:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
 .tech-list {
