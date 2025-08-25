@@ -42,8 +42,7 @@ main {
     background: rgba(52, 152, 219, 0.3);
 }
 
-/* Modern Animation Keyframes */
-/* Optimized Animation Keyframes */
+/* Animation Keyframes */
 @keyframes fadeInUp {
     0% {
         opacity: 0;

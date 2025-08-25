@@ -1,19 +1,4 @@
-docum    if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-            const formStatus = document.getElementById('form-status');
-            const originalButtonText = submitButton.textContent;
-            
-            try {
-                // Reset and show loading state
-                submitButton.classList.add('loading');
-                submitButton.disabled = true;
-                submitButton.textContent = 'Sending...';
-                formStatus.style.display = 'block';
-                formStatus.textContent = 'Sending message...';
-                formStatus.className = '';stener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     // Handle contact form submission
     const contactForm = document.getElementById('contact-form');
     const formStatus = document.getElementById('form-status');
@@ -61,12 +46,6 @@ docum    if (contactForm) {
         });
     }
 
-    // Initialize sections for fade-in
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        section.classList.add('section-hidden');
-    });
-
     // Smooth scrolling with dynamic highlighting
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -86,26 +65,7 @@ docum    if (contactForm) {
         });
     });
 
-    // Intersection Observer for scroll animations
-    const observerOptions = {
-        root: null,
-        threshold: 0.15,
-        rootMargin: '0px'
-    };
 
-    const sectionObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.remove('section-hidden');
-                entry.target.classList.add('section-visible');
-                observer.unobserve(entry.target); // Only animate once
-            }
-        });
-    }, observerOptions);
-
-    sections.forEach(section => {
-        sectionObserver.observe(section);
-    });
 
     // Add active class to current nav item
     const currentLocation = window.location.pathname;

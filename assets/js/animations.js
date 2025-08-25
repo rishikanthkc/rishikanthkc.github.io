@@ -45,9 +45,12 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Add reveal animation to sections
-document.querySelectorAll('section').forEach(section => {
-    section.classList.add('reveal');
+// Initialize sections for reveal animations
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.add('reveal');
+        observer.observe(section);
+    });
     observer.observe(section);
 });
 
