@@ -5,6 +5,29 @@
     scroll-behavior: smooth;
 }
 
+#form-status {
+    padding: 1rem;
+    margin-top: 1.5rem;
+    border-radius: 4px;
+    font-family: "cormorant-garamond", serif;
+    font-size: 1.2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+#form-status.success {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+#form-status.error {
+    background-color: #fff5f5;
+    color: #c53030;
+    border: 1px solid #feb2b2;
+}
+
 ::selection {
     background: rgba(52, 152, 219, 0.3);
 }

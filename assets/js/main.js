@@ -7,43 +7,41 @@ document.addEventListener('DOMContentLoaded', () => {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Show loading state
             const submitButton = contactForm.querySelector('button[type="submit"]');
             const originalButtonText = submitButton.textContent;
-            submitButton.textContent = 'Sending...';
-            submitButton.disabled = true;
             
             try {
+                // Reset and show loading state
+                submitButton.textContent = 'Sending...';
+                submitButton.disabled = true;
+                formStatus.style.display = 'block';
+                formStatus.textContent = 'Sending message...';
+                formStatus.className = '';
+                
                 const response = await fetch(contactForm.action, {
                     method: 'POST',
                     body: new FormData(contactForm),
                     headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        'Accept': 'application/json'
                     }
                 });
                 
-                const data = await response.json();
-                formStatus.style.display = 'block';
-                
                 if (response.ok) {
-                    // Success - redirect to thank you page
-                    window.location.href = contactForm.querySelector('input[name="_next"]').value;
+                    formStatus.textContent = 'Thank you for reaching out! I will respond to your message soon.';
+                    formStatus.className = 'success';
+                    contactForm.reset();
                 } else {
-                    // Error message
-                    formStatus.textContent = data.error || 'Oops! There was a problem sending your message. Please try again.';
-                    formStatus.style.color = '#e74c3c';
+                    const data = await response.json();
+                    throw new Error(data.error || 'Network response was not ok');
                 }
             } catch (error) {
-                // Network error message
-                formStatus.style.display = 'block';
                 formStatus.textContent = 'Oops! There was a problem sending your message. Please try again.';
-                formStatus.style.color = '#e74c3c';
+                formStatus.className = 'error';
+            } finally {
+                // Reset button state
+                submitButton.textContent = originalButtonText;
+                submitButton.disabled = false;
             }
-            
-            // Reset button state
-            submitButton.textContent = originalButtonText;
-            submitButton.disabled = false;
         });
     }
 
