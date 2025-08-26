@@ -2,9 +2,9 @@
   "name": "portfolio-website",
   "version": "1.0.0",
   "description": "A personal portfolio website to showcase projects and skills.",
-  "main": "src/index.html",
+  "main": "index.html",
   "scripts": {
-    "start": "live-server src",
+    "start": "live-server .",
     "build": "echo 'Build step not defined'"
   },
   "author": "Your Name",
