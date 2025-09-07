@@ -3,3 +3,6 @@ node_modules/
 .env
 .vscode/
 *.log
+# Minified files
+assets/css/*.min.css
+assets/js/dist/

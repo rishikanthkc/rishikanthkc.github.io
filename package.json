@@ -5,12 +5,17 @@
   "main": "index.html",
   "scripts": {
     "start": "live-server .",
-    "build": "echo 'Build step not defined'"
+    "build": "npm run minify-css && npm run minify-js",
+    "minify-css": "cleancss -o assets/css/styles.min.css assets/css/styles.css",
+    "minify-js": "mkdir -p assets/js/dist && terser assets/js/main.js assets/js/animations.js assets/js/celestial.js -o assets/js/dist/bundle.min.js --compress --mangle",
+    "dev": "npm run build && npm start"
   },
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "live-server": "^1.2.1"
+    "live-server": "^1.2.1",
+    "clean-css-cli": "^5.6.3",
+    "terser": "^5.31.0"
   }
 }

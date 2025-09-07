@@ -38,13 +38,52 @@ portfolio-website
    cd portfolio-website
    ```
 
-3. Open the `index.html` file in your web browser to view the portfolio.
+3. Install dependencies:
+   ```
+   npm install
+   ```
+
+4. Build for production (minify CSS and JS):
+   ```
+   npm run build
+   ```
+
+5. Start development server:
+   ```
+   npm start
+   ```
+   Or for development with auto-build:
+   ```
+   npm run dev
+   ```
+
+6. Open `index.html` in your web browser to view the portfolio.
 
 ## Technologies Used
 
-- HTML
-- CSS
-- JavaScript
+- HTML5
+- CSS3 (with CSS Variables, Flexbox, Grid, and modern features)
+- Vanilla JavaScript (ES6+)
+- Canvas API for animations
+
+## Performance Optimizations
+
+This portfolio includes several performance optimizations:
+
+- **Minified Assets**: CSS and JavaScript are minified for production
+- **Bundled JavaScript**: All JS files are combined into a single bundle to reduce HTTP requests
+- **Optimized Font Loading**: Fonts are loaded asynchronously with fallbacks
+- **Resource Hints**: Preload and prefetch directives for critical resources
+- **Efficient Animations**: Canvas animations use requestAnimationFrame and are optimized for 60fps
+- **Mobile-First Design**: Responsive design with touch-friendly interactions
+- **Accessibility**: Includes prefers-reduced-motion support and proper ARIA attributes
+
+## Build Process
+
+The build process includes:
+- CSS minification using clean-css
+- JavaScript bundling and minification using Terser
+- Automatic optimization of assets for production deployment
 
 ## Contact
 
